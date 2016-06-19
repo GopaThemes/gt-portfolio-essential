@@ -20,9 +20,10 @@ include_once plugin_dir_path(__FILE__) . 'inc/shortcodes/portfolio.php';
 include_once plugin_dir_path(__FILE__) . 'inc/shortcodes/skillbars.php';
 include_once plugin_dir_path(__FILE__) . 'inc/shortcodes/clients.php';
 include_once plugin_dir_path(__FILE__) . 'inc/shortcodes/common.php';
-require_once plugin_dir_path(__FILE__) . 'inc/shortcodes/buttons.php';
+include_once plugin_dir_path(__FILE__) . 'inc/shortcodes/buttons.php';
 include_once plugin_dir_path(__FILE__) . 'inc/cpt.php';
 include_once plugin_dir_path(__FILE__) . 'inc/meta-boxes.php';
+include_once plugin_dir_path(__FILE__) . 'inc/compile-sass.php';
 
 
 // Hooks your functions into the correct filters

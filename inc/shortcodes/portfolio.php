@@ -101,7 +101,21 @@ function gopathemes_portfolio($atts) {
                 <figure class="work-item <?php print_pitem_cats(get_the_ID()); ?>">
                         <a href="<?php the_permalink(); ?>"
                                 <?php echo ($bandw == 'enable') ? ' data-black-and-white="true"' : ''; ?>>
-                                <?php the_post_thumbnail( 'portfolio-thumb' ); ?>
+                                <?php 
+                                    if ( has_post_thumbnail(get_the_ID())) {
+                                        the_post_thumbnail( 'portfolio-thumb' ); 
+                                    } else {
+                                        $show_slider = get_post_meta( get_the_ID(), 'show_portfolio_slider', TRUE);
+                                        $images = get_post_meta( get_the_ID(), 'gopathemes_project_images', TRUE );
+                                        $images_ids = explode(',', $images);
+                                        
+                                        $thumb_id = ( $show_slider == 'on' && !empty( $images_ids ) ) ? $images_ids[0] : '';
+                                        $img = wp_get_attachment_image( $thumb_id, 'portfolio-thumb');
+                                        echo $img;
+                                    }
+                                
+                                
+                                ?>
                                 <span class="hover"></span>
                         </a>
                         <figcaption>
@@ -182,7 +196,7 @@ function gopathemes_register_portfolio_shortcode(){
                       "class" => "",
                       "heading" => __("Portfolio Style", 'gtpe'),
                       "param_name" => "style",
-                      "value" => array('Default' => 'default', 'Style 1' => 'style1', 'Style 2' => 'style2'),
+                      "value" => array('Default' => 'default', 'Style 1' => 'style1'),
                       "description" => ''
                    ), 
                     
@@ -258,7 +272,7 @@ function gopathemes_register_portfolio_shortcode(){
     add_shortcode('gt_portfolio', 'gopathemes_portfolio');
 }
 
-add_action('init', 'gopathemes_register_portfolio_shortcode');
+add_action('init', 'gopathemes_register_portfolio_shortcode', 9999);
     
 
 function arrayUnique($array, $preserveKeys = false)
