@@ -64,7 +64,7 @@ function gopathemes_custom_meta_boxes() {
     'id'          => 'testimonisls_meta_boxes',
     'title'       => __( 'Client Info', 'gtpe' ),
     'desc'        => '',
-    'pages'       => array( 'gopathemes_testimonials' ),
+    'pages'       => array( 'gt_testimonials' ),
     'context'     => 'normal',
     'priority'    => 'high',
     'fields'      => array(
