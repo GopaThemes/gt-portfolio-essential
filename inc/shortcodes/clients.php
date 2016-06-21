@@ -177,6 +177,6 @@ function gopathemes_register_clients_shortcode(){
     add_shortcode('gt_clients', 'gopathemes_clients');
 }
 
-add_action('init', 'gopathemes_register_clients_shortcode');
+add_action('init', 'gopathemes_register_clients_shortcode', 9999);
     
     

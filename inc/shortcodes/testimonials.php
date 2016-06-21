@@ -200,7 +200,7 @@ function gopathemes_register_testimonials_shortcode(){
     add_shortcode('gt_testimonials', 'gopathemes_testimonials');
 }
 
-add_action('init', 'gopathemes_register_testimonials_shortcode');
+add_action('init', 'gopathemes_register_testimonials_shortcode', 9999);
     
 if (class_exists('WPBakeryShortCode')) {
     

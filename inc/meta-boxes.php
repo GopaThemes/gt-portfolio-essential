@@ -157,7 +157,7 @@ function gopathemes_custom_meta_boxes() {
                   'label'       => __( 'Upload Client logo', 'gtpe' ),
                   'id'          => 'gopathemes_client_logo',
                   'type'        => 'upload',
-                  'desc'        => __( 'Please upload the client logo image. Only one image is allowed.<br><b>RECOMENDED SIZE: 200x50 pixels.</b>', 'gtpe' )
+                  'desc'        => __( 'Please upload the client logo image. Only one image is allowed.', 'gtpe' )
                 ),
 
             )
