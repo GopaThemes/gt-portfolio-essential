@@ -103,14 +103,14 @@ function gopathemes_portfolio($atts) {
                                 <?php echo ($bandw == 'enable') ? ' data-black-and-white="true"' : ''; ?>>
                                 <?php 
                                     if ( has_post_thumbnail(get_the_ID())) {
-                                        the_post_thumbnail( 'portfolio-thumb' ); 
+                                        the_post_thumbnail( 'haira-portfolio-thumb' ); 
                                     } else {
                                         $show_slider = get_post_meta( get_the_ID(), 'show_portfolio_slider', TRUE);
                                         $images = get_post_meta( get_the_ID(), 'gopathemes_project_images', TRUE );
                                         $images_ids = explode(',', $images);
                                         
                                         $thumb_id = ( $show_slider == 'on' && !empty( $images_ids ) ) ? $images_ids[0] : '';
-                                        $img = wp_get_attachment_image( $thumb_id, 'portfolio-thumb');
+                                        $img = wp_get_attachment_image( $thumb_id, 'haira-portfolio-thumb');
                                         echo $img;
                                     }
                                 
