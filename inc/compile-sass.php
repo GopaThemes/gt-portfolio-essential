@@ -37,11 +37,50 @@ function gopathemes_save_custom_css(){
                                 'font-weight' => '700'
                         ));
                 
+                $menu_typo = ot_get_option( 'haira_menu_typography',
+                        array(
+                            'font-color' => '#FFFFFF', 
+                            'font-size' => '13px', 
+                            'font-weight' => '400', 
+                            'letter-spacing' => '0.03em', 
+                            'text-transform' => 'none'
+                        ));
+                
+                $submenu_typo = ot_get_option( 'haira_submenu_typography',
+                        array(
+                            'font-color' => '#FFFFFF', 
+                            'font-size' => '12px', 
+                            'font-weight' => '400', 
+                            'line-height' => '45px', 
+                            'letter-spacing' => '0.03em', 
+                            'text-transform' => 'none'
+                        ));
 
                 $variables = array(
                     'primary-color' => $primary_color,
                     'second-color' => $secondary_color,
                     'bg-color' => $body_bg,
+                    
+                    'header-bg' => ot_get_option( 'haira_header_bg' ),
+                    'header-height' => ot_get_option( 'haira_header_height' ),
+                    
+                    'menu-fs'               => $menu_typo['font-size'],
+                    'menu-link-color'       => $menu_typo['font-color'],
+                    'menu-link-color-hover' => ot_get_option( 'haira_menu_link_color_hover' ),
+                    'menu-link-bg-hover'    => ot_get_option( 'haira_menu_link_bg_hover' ),
+                    'menu-link-ls'          => $menu_typo['letter-spacing'],
+                    'menu-font-weight'      => $menu_typo['font-weight'],
+                    'menu-text-transform'   => $menu_typo['text-transform'],
+                    
+                    'submenu-bg'                => ot_get_option( 'haira_submenu_bg' ),
+                    'submenu-fs'                => $submenu_typo['font-size'],
+                    'submenu-link-color'        => $submenu_typo['font-color'],
+                    'submenu-link-color-hover'  => ot_get_option( 'haira_submenu_link_color_on_hover' ),
+                    'submenu-link-bg-hover'     => ot_get_option( 'haira_submenu_link_bg_on_hover' ),
+                    'submenu-link-ls'           => $submenu_typo['letter-spacing'],
+                    'submenu-font-weight'       => $submenu_typo['font-weight'],
+                    'submenu-text-transform'    => $submenu_typo['text-transform'],
+                    'submenu-lh'                => $submenu_typo['line-height'],
                     
                     'heading-color' => $heading_font['font-color'],
                     'heading-font' => $heading_font['font-family'],
@@ -75,7 +114,23 @@ function gopathemes_compile_css( $variables ) {
         $scss_code  = str_replace('@import "vars";', $variables, file_get_contents(get_template_directory().'/scss/master.scss'));
         $css        = $scss->compile($scss_code);
         
-        file_put_contents(get_template_directory().'/css/custom_style.css', $css);
+        if ( is_multisite() ) {
+            
+            $blog_id = get_current_blog_id();
+            $upload_dir = wp_upload_dir('haira');
+            
+            $path = $upload_dir['path'].'/custom_style-'.$blog_id.'.css';
+            
+            
+        } else {
+            
+            $path = get_template_directory().'/css/custom_style.css';
+            
+        }
+        
+        file_put_contents($path, $css);
+        
+        
         
     } catch (Exception $ex) {
         die($ex->getMessage());
@@ -123,7 +178,7 @@ function haira_setup_scss_vars ($contents, $custom_vars) {
         $varName = trim(substr($matches[2], 1));
         $varValue = $matches[3];
         
-        if ( isset ( $custom_vars[$varName] ) ) {
+        if ( isset ( $custom_vars[$varName] ) && $custom_vars[$varName] != '' ) {
             $contents[ $key ] = '$' . $varName . ': ' . $custom_vars[ $varName ] . ";\n";
         }
         
