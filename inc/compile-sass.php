@@ -117,10 +117,7 @@ function gopathemes_compile_css( $variables ) {
         if ( is_multisite() ) {
             
             $blog_id = get_current_blog_id();
-            $upload_dir = wp_upload_dir('haira');
-            
-            $path = $upload_dir['path'].'/custom_style-'.$blog_id.'.css';
-            
+            $path = get_template_directory().'/css/custom_style-'.$blog_id.'.css';
             
         } else {
             
