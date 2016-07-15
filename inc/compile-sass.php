@@ -118,12 +118,17 @@ function gopathemes_compile_css( $variables ) {
         $file_name  = 'custom_style-'.time().'-'.$blog_id.'.css';
         $path = get_template_directory().'/css/';
         
-        if ( get_option('haira_css') !== false ) {
-            unlink($path.get_option('haira_css'));
+        $old_filename = (is_multisite()) ? get_site_option('haira_css') : get_option('haira_css');
+        
+        if ( $old_filename !== false ) {
+            unlink($path.$old_filename);
         }
         
-        update_option('haira_css', $file_name);
-        
+        if (is_multisite()) {
+            update_site_option('haira_css', $file_name);
+        } else {
+            update_site_option('haira_css', $file_name);
+        }
         
         file_put_contents($path.$file_name, $css);
         
