@@ -114,18 +114,18 @@ function gopathemes_compile_css( $variables ) {
         $scss_code  = str_replace('@import "vars";', $variables, file_get_contents(get_template_directory().'/scss/master.scss'));
         $css        = $scss->compile($scss_code);
         
-        if ( is_multisite() ) {
-            
-            $blog_id = get_current_blog_id();
-            $path = get_template_directory().'/css/custom_style-'.$blog_id.'.css';
-            
-        } else {
-            
-            $path = get_template_directory().'/css/custom_style.css';
-            
+        $blog_id = get_current_blog_id();
+        $file_name  = 'custom_style-'.time().'-'.$blog_id.'.css';
+        $path = get_template_directory().'/css/';
+        
+        if ( get_option('haira_css') !== false ) {
+            unlink($path.get_option('haira_css'));
         }
         
-        file_put_contents($path, $css);
+        update_option('haira_css', $file_name);
+        
+        
+        file_put_contents($path.$file_name, $css);
         
         
         
