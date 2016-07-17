@@ -24,9 +24,12 @@ function gopathemes_testimonials($atts) {
                         'show_from'         => '',
                         'testi_order'       => 'ASC',
                         'limit'             => -1,
+                        'text_color'        => '',
+                        'client_logo'       => '',
                         'slidestoshow'      => '',
                         'slidestoscroll'    => '', 
                         'dots'              => '',
+                        'style'             => '',
                         'arrows'            => ''
     ), $atts));
 
@@ -54,21 +57,24 @@ function gopathemes_testimonials($atts) {
         <?php
             while ( $testimonials->have_posts() ) : $testimonials->the_post();
             
+                $client_logo = get_post_meta( get_the_ID(), 'gopathemes_client_logo', true );
                 $client_position = get_post_meta( get_the_ID(), 'gopathemes_client_position', true );
                 $web_link = get_post_meta( get_the_ID(), 'gopathemes_testi_weblink', true );
                 $client_name = ( $web_link != '' ) ? '<a href="'.$web_link.'" rel="nofollow">'.get_the_title().'</a>' : get_the_title();
-         
+                $client_logo_img = ( $client_logo != '' ) ? '<img src="'.$client_logo.'" alt="'.get_the_title().'">' : '<i class="fa fa-quote-left"></i>';
+                
         ?>
 
-            <div class="testimonial"> 
+            <div class="testimonial <?php echo $style; ?>"> 
                 <div class="q-icon">
-                    <i class="fa fa-quote-left"></i>
+                    <?php echo $client_logo_img; ?>
                 </div>
-                <p class="feedback">
+                <p class="feedback"<?php echo ( $text_color == '' ) ? '' : ' style="color:'.$text_color.';"'; ?>>
                     <?php echo wp_strip_all_tags(get_the_content()); ?>
                 </p>
-                <p class="client-info">
-                    <span class="client-name"><?php echo $client_name; ?></span> - <span class="client-position"><?php echo $client_position; ?></span>
+                
+                <p class="client-info"<?php echo ( $text_color == '' ) ? '' : ' style="color:'.$text_color.';"'; ?>>
+                    <span class="client-name"><?php echo $client_name; ?></span> <span class="client-position"><?php echo $client_position; ?></span>
                 </p>
 
             </div>
@@ -140,6 +146,16 @@ function gopathemes_register_testimonials_shortcode(){
                       "description" => __('Leave blank for no limit', 'gtpe')
                    ),
 
+                   // TEXT COLOR
+                   array(
+                      "type" => "colorpicker",
+                      "class" => "",
+                      "heading" => __("Testimonial Text color", 'gtpe'),
+                      "param_name" => "text_color",
+                      "value" => '',
+                      "description" => __('Default: #ffffff ( white )', 'gtpe')
+                   ),
+
                    // Order
                    array(
                       "type" => "dropdown",
@@ -147,6 +163,15 @@ function gopathemes_register_testimonials_shortcode(){
                       "heading" => __("Order by", 'gtpe'),
                       "param_name" => "testi_order",
                       "value" => array(__('Ascending order', 'gtpe') => 'ASC', __('Descending order', 'gtpe') => 'DESC'),
+                   ),
+
+                   // Design
+                   array(
+                      "type" => "dropdown",
+                      "class" => "",
+                      "heading" => __("Design", 'gtpe'),
+                      "param_name" => "style",
+                      "value" => array(__('Default', 'gtpe') => '', __('Style 1', 'gtpe') => 'style1'),
                    ),
                     
                     // Slider Settings

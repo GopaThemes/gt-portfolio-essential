@@ -83,6 +83,12 @@ function gopathemes_custom_meta_boxes() {
         'desc'        => __( 'e.g: http://www.example.com/', 'gtpe' )
       ),
         
+      array(
+        'label'       => __( 'Client Logo', 'gtpe' ),
+        'id'          => 'gopathemes_client_logo',
+        'type'        => 'upload'
+      ),
+        
     )
   );
   

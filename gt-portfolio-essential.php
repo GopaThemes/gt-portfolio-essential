@@ -3,7 +3,7 @@
  * Plugin Name: Portfolio Essential by GopaThemes
  * Plugin URI: https://github.com/GopaThemes/gt-portfolio-essential
  * Description: Portfolio Essential Plugin for WordPress by GopaThemes
- * Version: 1.04
+ * Version: 1.05
  * Author: GopaThemes
  * Author URI: http://www.gopathemes.com
  */
