@@ -97,6 +97,8 @@ function gopathemes_portfolio($atts) {
                 } else {
                     $ajax_url = get_the_permalink().'&op_item=1';
                 }
+                $show_slider = get_post_meta( get_the_ID(), 'show_portfolio_slider', TRUE);
+                $images = get_post_meta( get_the_ID(), 'gopathemes_project_images', TRUE );
                 ?>
                 <figure class="work-item <?php print_pitem_cats(get_the_ID()); ?>">
                         <a href="<?php the_permalink(); ?>"
@@ -104,14 +106,14 @@ function gopathemes_portfolio($atts) {
                                 <?php 
                                     if ( has_post_thumbnail(get_the_ID())) {
                                         the_post_thumbnail( 'haira-portfolio-thumb' ); 
-                                    } else {
-                                        $show_slider = get_post_meta( get_the_ID(), 'show_portfolio_slider', TRUE);
-                                        $images = get_post_meta( get_the_ID(), 'gopathemes_project_images', TRUE );
+                                    } elseif( $show_slider == 'on' && !empty( $images_ids ) ) {
                                         $images_ids = explode(',', $images);
                                         
                                         $thumb_id = ( $show_slider == 'on' && !empty( $images_ids ) ) ? $images_ids[0] : '';
                                         $img = wp_get_attachment_image( $thumb_id, 'haira-portfolio-thumb');
                                         echo $img;
+                                    } else {
+                                        echo '<img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=No+Featued+Image&w=480&h=320" alt="'.get_the_title().'">';
                                     }
                                 
                                 
